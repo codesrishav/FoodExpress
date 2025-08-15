@@ -12,7 +12,7 @@ const Menu = () => {
     const fetchMenu = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://localhost:5000/api/menu');
+        const res = await axios.get('https://foodexpress-server.onrender.com/api/menu');
         setMenuItems(res.data);
       } catch (err) {
         setError('Failed to load menu. Please try again.');
@@ -93,3 +93,4 @@ const Menu = () => {
 };
 
 export default Menu;
+
