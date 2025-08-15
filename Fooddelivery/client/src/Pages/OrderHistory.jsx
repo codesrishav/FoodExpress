@@ -11,7 +11,7 @@ function OrderHistory() {
       try {
         setLoading(true);
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/orders', {
+        const res = await axios.get('https://foodexpress-server.onrender.com/api/orders', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(res.data);
@@ -61,3 +61,4 @@ function OrderHistory() {
 }
 
 export default OrderHistory;
+
