@@ -18,7 +18,7 @@ const Home = () => {
           Delicious meals delivered fast at your doorstep. Fresh, tasty, and always hot!
         </p>
         <button
-          onClick={() => (window.location.href = '/menu')}
+          onClick={() => navigate("/menu")}
           className="mt-8 px-8 py-3 bg-red-500 text-white font-semibold rounded shadow-lg hover:bg-red-600 transition"
         >
           Order Now
@@ -29,3 +29,4 @@ const Home = () => {
 };
 
 export default Home;
+
