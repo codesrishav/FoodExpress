@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       className="relative flex justify-center items-center min-h-screen max-w-full bg-cover bg-center"
@@ -29,4 +33,3 @@ const Home = () => {
 };
 
 export default Home;
-
