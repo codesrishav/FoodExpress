@@ -16,9 +16,11 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-red-500 to-yellow-400 shadow-md py-4 w-full">
       <div className="max-w-screen-xl mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-white tracking-wide">
-          🍴 FoodExpress
-        </h1>
+        <Link to="/" onClick={() => setIsOpen(false)}>
+          <h1 className="text-2xl font-bold text-white tracking-wide cursor-pointer">
+            🍴 FoodExpress
+          </h1>
+        </Link>
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 items-center">
@@ -177,3 +179,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
