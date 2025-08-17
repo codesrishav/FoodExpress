@@ -29,15 +29,16 @@ const Navbar = () => {
 <div className="relative flex items-center">
   <Link
     to="/cart"
-    className="text-white hover:text-black font-medium transition duration-300"
-    onClick={() => setIsOpen(false)} // for mobile close
+    className="text-white font-medium"
+    onClick={() => setIsOpen(false)}
   >
     Cart
   </Link>
   {cart.length > 0 && (
-    <span className="absolute -top-1 -right-3 w-3 h-3 bg-red-600 rounded-full border border-white"></span>
+    <span className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-yellow-400 rounded-full border border-white"></span>
   )}
 </div>
+
 
           {user && (
             <Link to="/orders" className="text-white hover:text-black font-medium transition duration-300">
@@ -124,4 +125,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 
