@@ -25,20 +25,19 @@ const Navbar = () => {
           <Link to="/" className="text-white hover:text-black font-medium transition duration-300">Home</Link>
           <Link to="/menu" className="text-white hover:text-black font-medium transition duration-300">Menu</Link>
 
-         {/* Cart with red dot */}
-<div className="relative flex items-center">
-  <Link
-    to="/cart"
-    className="text-white font-medium"
-    onClick={() => setIsOpen(false)}
-  >
-    Cart
-  </Link>
-  {cart.length > 0 && (
-    <span className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-yellow-400 rounded-full border border-white"></span>
-  )}
-</div>
-
+          {/* Cart with red dot */}
+          <div className="relative flex items-center">
+            <Link
+              to="/cart"
+              className="text-white font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              Cart
+            </Link>
+            {cart.length > 0 && (
+              <span className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-yellow-400 rounded-full border border-white"></span>
+            )}
+          </div>
 
           {user && (
             <Link to="/orders" className="text-white hover:text-black font-medium transition duration-300">
@@ -86,14 +85,15 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-red-600 flex flex-col space-y-4 py-4 px-6">
+        <div className="md:hidden bg-gradient-to-r from-red-500 to-yellow-400 flex flex-col space-y-4 py-4 px-6">
           <Link to="/" className="text-white font-medium" onClick={() => setIsOpen(false)}>Home</Link>
           <Link to="/menu" className="text-white font-medium" onClick={() => setIsOpen(false)}>Menu</Link>
 
-          <div className="relative">
+          {/* Cart with red dot */}
+          <div className="relative flex items-center">
             <Link to="/cart" className="text-white font-medium" onClick={() => setIsOpen(false)}>Cart</Link>
             {cart.length > 0 && (
-              <span className="absolute -top-1 -right-3 w-2 h-2 bg-red-600 rounded-full"></span>
+              <span className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-yellow-400 rounded-full border border-white"></span>
             )}
           </div>
 
@@ -125,5 +125,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
