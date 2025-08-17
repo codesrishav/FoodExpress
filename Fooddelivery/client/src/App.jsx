@@ -1,22 +1,23 @@
-import { Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
-import Menu from './Pages/Menu';
-import Cart from './Pages/Cart';
-import Login from './Pages/Login';
-import Register from './Pages/Register';
-import Checkout from './Pages/Checkout';
-import Navbar from './Components/Navbar';
-import ProtectedRoute from './Components/ProtectedRoute';
-import OrderHistory from './Pages/OrderHistory';
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import Menu from "./Pages/Menu";
+import Cart from "./Pages/Cart";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import Checkout from "./Pages/Checkout";
+import Navbar from "./Components/Navbar";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import OrderHistory from "./Pages/OrderHistory";
+import Footer from "./Components/Footer"; // ✅ Import Footer
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 function App() {
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-yellow-100 text-center">
-      {/* Fixed Navbar */}
+    <div className="min-h-screen flex flex-col w-full overflow-x-hidden bg-yellow-100">
+      {/* Navbar */}
       <Navbar />
 
       {/* Toast Notifications */}
@@ -31,8 +32,8 @@ function App() {
         pauseOnHover
       />
 
-      {/* 👇 Content wrapper (adds space below fixed Navbar) */}
-      <div className="pt-20 px-4">
+      {/* Main Content */}
+      <div className="flex-grow text-center">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
@@ -61,10 +62,15 @@ function App() {
           {/* ❌ Catch-All */}
           <Route
             path="*"
-            element={<h1 className="text-red-500 text-2xl">404 - Page Not Found</h1>}
+            element={
+              <h1 className="text-red-500 text-2xl">404 - Page Not Found</h1>
+            }
           />
         </Routes>
       </div>
+
+      {/* ✅ Footer always at bottom */}
+      <Footer />
     </div>
   );
 }
