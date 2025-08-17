@@ -22,10 +22,20 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 items-center">
-          <Link to="/" className="text-white hover:text-black font-medium transition duration-300">Home</Link>
-          <Link to="/menu" className="text-white hover:text-black font-medium transition duration-300">Menu</Link>
+          <Link
+            to="/"
+            className="text-white hover:text-black font-medium transition duration-300"
+          >
+            Home
+          </Link>
+          <Link
+            to="/menu"
+            className="text-white hover:text-black font-medium transition duration-300"
+          >
+            Menu
+          </Link>
 
-          {/* Cart with red dot */}
+          {/* Desktop Cart with dark red dot */}
           <div className="relative flex items-center">
             <Link
               to="/cart"
@@ -35,12 +45,15 @@ const Navbar = () => {
               Cart
             </Link>
             {cart.length > 0 && (
-              <span className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-yellow-400 rounded-full border border-white"></span>
+              <span className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-red-700 rounded-full border border-white"></span>
             )}
           </div>
 
           {user && (
-            <Link to="/orders" className="text-white hover:text-black font-medium transition duration-300">
+            <Link
+              to="/orders"
+              className="text-white hover:text-black font-medium transition duration-300"
+            >
               Orders
             </Link>
           )}
@@ -86,19 +99,43 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-gradient-to-r from-red-500 to-yellow-400 flex flex-col space-y-4 py-4 px-6">
-          <Link to="/" className="text-white font-medium" onClick={() => setIsOpen(false)}>Home</Link>
-          <Link to="/menu" className="text-white font-medium" onClick={() => setIsOpen(false)}>Menu</Link>
+          <Link
+            to="/"
+            className="text-white font-medium"
+            onClick={() => setIsOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            to="/menu"
+            className="text-white font-medium"
+            onClick={() => setIsOpen(false)}
+          >
+            Menu
+          </Link>
 
-          {/* Cart with red dot */}
-          <div className="relative flex items-center">
-            <Link to="/cart" className="text-white font-medium" onClick={() => setIsOpen(false)}>Cart</Link>
+          {/* Mobile Cart with dark red dot centered */}
+          <div className="relative flex items-center justify-center">
+            <Link
+              to="/cart"
+              className="text-white font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              Cart
+            </Link>
             {cart.length > 0 && (
-              <span className="absolute -top-1 -right-3 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-yellow-400 rounded-full border border-white"></span>
+              <span className="absolute -top-1 -right-4 w-2.5 h-2.5 bg-red-700 rounded-full border border-white"></span>
             )}
           </div>
 
           {user && (
-            <Link to="/orders" className="text-white font-medium" onClick={() => setIsOpen(false)}>Orders</Link>
+            <Link
+              to="/orders"
+              className="text-white font-medium"
+              onClick={() => setIsOpen(false)}
+            >
+              Orders
+            </Link>
           )}
           {user ? (
             <>
@@ -106,7 +143,10 @@ const Navbar = () => {
                 ✅ {user.name}
               </span>
               <button
-                onClick={() => { logout(); setIsOpen(false); }}
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
                 className="bg-white text-red-500 px-4 py-1 rounded hover:bg-black hover:text-white"
               >
                 Logout
@@ -114,8 +154,20 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/login" className="bg-white text-blue-500 px-4 py-1 rounded" onClick={() => setIsOpen(false)}>Login</Link>
-              <Link to="/register" className="bg-white text-blue-500 px-4 py-1 rounded" onClick={() => setIsOpen(false)}>Register</Link>
+              <Link
+                to="/login"
+                className="bg-white text-blue-500 px-4 py-1 rounded"
+                onClick={() => setIsOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="bg-white text-blue-500 px-4 py-1 rounded"
+                onClick={() => setIsOpen(false)}
+              >
+                Register
+              </Link>
             </>
           )}
         </div>
