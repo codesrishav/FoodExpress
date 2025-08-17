@@ -25,13 +25,19 @@ const Navbar = () => {
           <Link to="/" className="text-white hover:text-black font-medium transition duration-300">Home</Link>
           <Link to="/menu" className="text-white hover:text-black font-medium transition duration-300">Menu</Link>
 
-          {/* Cart with red dot */}
-          <div className="relative">
-            <Link to="/cart" className="text-white hover:text-black font-medium transition duration-300">Cart</Link>
-            {cart.length > 0 && (
-              <span className="absolute -top-1 -right-2 w-2 h-2 bg-red-600 rounded-full"></span>
-            )}
-          </div>
+         {/* Cart with red dot */}
+<div className="relative flex items-center">
+  <Link
+    to="/cart"
+    className="text-white hover:text-black font-medium transition duration-300"
+    onClick={() => setIsOpen(false)} // for mobile close
+  >
+    Cart
+  </Link>
+  {cart.length > 0 && (
+    <span className="absolute -top-1 -right-3 w-3 h-3 bg-red-600 rounded-full border border-white"></span>
+  )}
+</div>
 
           {user && (
             <Link to="/orders" className="text-white hover:text-black font-medium transition duration-300">
@@ -118,3 +124,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
