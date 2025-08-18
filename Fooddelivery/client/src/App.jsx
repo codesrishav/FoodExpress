@@ -33,7 +33,7 @@ function App() {
       />
 
       {/* Main Content */}
-      <div className="flex-grow text-center pt-20">
+      <div className="flex-grow text-center pt-10">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
@@ -76,4 +76,5 @@ function App() {
 }
 
 export default App;
+
 
