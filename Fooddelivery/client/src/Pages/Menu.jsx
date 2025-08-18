@@ -7,6 +7,7 @@ const Menu = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
   const { cart, dispatch } = useCart();
 
   useEffect(() => {
@@ -65,14 +66,29 @@ const Menu = () => {
     "Fast Food": "/menu/pizza.jpeg",
   };
 
-  // Filter items based on category
-  const filteredItems =
-    selectedCategory === "All"
-      ? menuItems
-      : menuItems.filter((item) => item.category === selectedCategory);
+  // Filter items based on category + search
+  const filteredItems = menuItems.filter((item) => {
+    const matchesCategory =
+      selectedCategory === "All" || item.category === selectedCategory;
+    const matchesSearch = item.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="max-w-screen-xl mx-auto w-full overflow-x-hidden p-4">
+      {/* 🔍 Search Bar */}
+      <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          placeholder="Search your favorite food..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full md:w-1/2 px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+        />
+      </div>
+
       {/* Category Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
         {categories.map((cat) => (
@@ -97,50 +113,57 @@ const Menu = () => {
 
       {/* Menu Items */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {filteredItems.map((item) => {
-          const quantity = getQuantity(item._id);
-          return (
-            <div key={item._id} className="bg-white p-4 shadow rounded">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-40 object-cover rounded"
-              />
-              <h2 className="text-lg font-semibold mt-2">{item.name}</h2>
-              <p className="text-gray-700 mb-1">₹{item.price}</p>
-              <p className="text-sm text-gray-500 italic">{item.category}</p>
-              {quantity > 0 ? (
-                <div className="flex items-center justify-center gap-2 mt-2">
+        {filteredItems.length > 0 ? (
+          filteredItems.map((item) => {
+            const quantity = getQuantity(item._id);
+            return (
+              <div
+                key={item._id}
+                className="bg-white p-4 shadow rounded hover:shadow-lg transition"
+              >
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-40 object-cover rounded"
+                />
+                <h2 className="text-lg font-semibold mt-2">{item.name}</h2>
+                <p className="text-gray-700 mb-1">₹{item.price}</p>
+                <p className="text-sm text-gray-500 italic">{item.category}</p>
+                {quantity > 0 ? (
+                  <div className="flex items-center justify-center gap-2 mt-2">
+                    <button
+                      onClick={() => handleDecrement(item._id)}
+                      className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                    >
+                      −
+                    </button>
+                    <span className="px-3">{quantity}</span>
+                    <button
+                      onClick={() => handleIncrement(item._id)}
+                      className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
                   <button
-                    onClick={() => handleDecrement(item._id)}
-                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                    onClick={() => handleAddToCart(item)}
+                    className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                   >
-                    −
+                    Add to Cart
                   </button>
-                  <span className="px-3">{quantity}</span>
-                  <button
-                    onClick={() => handleIncrement(item._id)}
-                    className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
-                  >
-                    +
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => handleAddToCart(item)}
-                  className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                >
-                  Add to Cart
-                </button>
-              )}
-            </div>
-          );
-        })}
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <p className="col-span-full text-center text-gray-500 text-lg">
+            No items found
+          </p>
+        )}
       </div>
     </div>
   );
 };
 
 export default Menu;
-
-
