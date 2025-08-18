@@ -62,7 +62,7 @@ const Menu = () => {
     "South Indian": "/menu/idli.jpeg",
     Desserts: "/menu/jalebi.jpeg",
     Beverages: "/menu/tea.jpeg",
-    "Fast Food": "/menu/pizza.jpeg,
+    "Fast Food": "/menu/pizza.jpeg",
   };
 
   // Filter items based on category
@@ -142,4 +142,5 @@ const Menu = () => {
 };
 
 export default Menu;
+
 
