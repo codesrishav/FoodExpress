@@ -59,12 +59,10 @@ const Menu = () => {
     All: "/menu/dal_makhani.jpeg", // optional placeholder
     Indian: "/menu/chole.jpeg",
     Chinese: "/menu/noodles.jpeg",
-    South_Indian: "/menu/idli.jpeg",
-    Dessert: "/menu/jalebi.jpeg",
-    Pizza: "/menu/pizza.jpeg",
-    Burger: "/menu/burger.jpeg",
-    Drinks: "/menu/tea.jpeg",
-    Noodles: "/menu/noodles.jpeg",
+    "South Indian": "/menu/idli.jpeg",
+    Desserts: "/menu/jalebi.jpeg",
+    Beverages: "/menu/tea.jpeg",
+    "Fast Food": "/menu/pizza.jpeg,
   };
 
   // Filter items based on category
@@ -144,3 +142,4 @@ const Menu = () => {
 };
 
 export default Menu;
+
