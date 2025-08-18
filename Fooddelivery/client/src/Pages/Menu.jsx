@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useCart } from '../Contexts/CartContext';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useCart } from "../Contexts/CartContext";
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const { cart, dispatch } = useCart();
 
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('https://foodexpress-server.onrender.com/api/menu');
+        const res = await axios.get(
+          "https://foodexpress-server.onrender.com/api/menu"
+        );
         setMenuItems(res.data);
       } catch (err) {
-        setError('Failed to load menu. Please try again.');
+        setError("Failed to load menu. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -29,15 +32,15 @@ const Menu = () => {
   };
 
   const handleAddToCart = (item) => {
-    dispatch({ type: 'ADD_TO_CART', payload: item });
+    dispatch({ type: "ADD_TO_CART", payload: item });
   };
 
   const handleIncrement = (id) => {
-    dispatch({ type: 'INCREMENT_QUANTITY', payload: id });
+    dispatch({ type: "INCREMENT_QUANTITY", payload: id });
   };
 
   const handleDecrement = (id) => {
-    dispatch({ type: 'DECREMENT_QUANTITY', payload: id });
+    dispatch({ type: "DECREMENT_QUANTITY", payload: id });
   };
 
   if (loading) {
@@ -48,49 +51,96 @@ const Menu = () => {
     return <div className="text-center mt-10 text-red-500">{error}</div>;
   }
 
+  // Extract unique categories
+  const categories = ["All", ...new Set(menuItems.map((item) => item.category))];
+
+  // Local category images from public/menu/
+  const categoryImages = {
+    All: "/menu/dal_makhani.jpeg", // optional placeholder
+    Indian: "/menu/chole.jpeg",
+    Chinese: "/menu/noodles.jpeg",
+    South_Indian: "/menu/idli.jpeg",
+    Dessert: "/menu/jalebi.jpeg",
+    Pizza: "/menu/pizza.jpeg",
+    Burger: "/menu/burger.jpeg",
+    Drinks: "/menu/tea.jpeg",
+    Noodles: "/menu/noodles.jpeg",
+  };
+
+  // Filter items based on category
+  const filteredItems =
+    selectedCategory === "All"
+      ? menuItems
+      : menuItems.filter((item) => item.category === selectedCategory);
+
   return (
-    <div className="max-w-screen-xl mx-auto w-full overflow-x-hidden grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-      {menuItems.map((item) => {
-        const quantity = getQuantity(item._id);
-        return (
-          <div key={item._id} className="bg-white p-4 shadow rounded">
+    <div className="max-w-screen-xl mx-auto w-full overflow-x-hidden p-4">
+      {/* Category Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
+        {categories.map((cat) => (
+          <div
+            key={cat}
+            onClick={() => setSelectedCategory(cat)}
+            className={`cursor-pointer flex flex-col items-center p-4 rounded-xl shadow-md transition border-2 ${
+              selectedCategory === cat
+                ? "border-green-500 bg-green-50"
+                : "border-gray-200 hover:border-green-400"
+            }`}
+          >
             <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-40 object-cover rounded"
+              src={categoryImages[cat] || "/menu/default.jpeg"}
+              alt={cat}
+              className="w-20 h-20 object-cover rounded mb-2"
             />
-            <h2 className="text-lg font-semibold mt-2">{item.name}</h2>
-            <p className="text-gray-700 mb-2">₹{item.price}</p>
-            {quantity > 0 ? (
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  onClick={() => handleDecrement(item._id)}
-                  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                >
-                  −
-                </button>
-                <span className="px-3">{quantity}</span>
-                <button
-                  onClick={() => handleIncrement(item._id)}
-                  className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
-                >
-                  +
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => handleAddToCart(item)}
-                className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-              >
-                Add to Cart
-              </button>
-            )}
+            <span className="font-medium">{cat}</span>
           </div>
-        );
-      })}
+        ))}
+      </div>
+
+      {/* Menu Items */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {filteredItems.map((item) => {
+          const quantity = getQuantity(item._id);
+          return (
+            <div key={item._id} className="bg-white p-4 shadow rounded">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-40 object-cover rounded"
+              />
+              <h2 className="text-lg font-semibold mt-2">{item.name}</h2>
+              <p className="text-gray-700 mb-1">₹{item.price}</p>
+              <p className="text-sm text-gray-500 italic">{item.category}</p>
+              {quantity > 0 ? (
+                <div className="flex items-center justify-center gap-2 mt-2">
+                  <button
+                    onClick={() => handleDecrement(item._id)}
+                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    −
+                  </button>
+                  <span className="px-3">{quantity}</span>
+                  <button
+                    onClick={() => handleIncrement(item._id)}
+                    className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => handleAddToCart(item)}
+                  className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                >
+                  Add to Cart
+                </button>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
 export default Menu;
-
