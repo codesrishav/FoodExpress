@@ -7,6 +7,7 @@ const Navbar = () => {
     const { user, logout } = useAuth();
     const { cart } = useCart();
     const [isOpen, setIsOpen] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false); // ✅ new state for popup
 
     useEffect(() => {
         console.log("Navbar user updated:", user);
@@ -67,7 +68,7 @@ const Navbar = () => {
                                     ✅ {user.name}
                                 </span>
                                 <button
-                                    onClick={logout}
+                                    onClick={() => setShowConfirm(true)} // ✅ trigger popup
                                     className="bg-white text-red-500 px-4 py-1 rounded hover:bg-black hover:text-white transition duration-300"
                                 >
                                     Logout
@@ -118,7 +119,19 @@ const Navbar = () => {
                             Menu
                         </Link>
 
-                        {/* Mobile Cart with dark red dot centered */} <div className="relative flex items-center justify-center"> <Link to="/cart" className="text-white font-medium" onClick={() => setIsOpen(false)} > Cart </Link> {cart.length > 0 && (<span className="absolute -top-1 -right-4 w-2.5 h-2.5 bg-red-700 rounded-full border border-white"></span>)} </div>
+                        {/* Mobile Cart with dark red dot centered */}
+                        <div className="relative flex items-center justify-center">
+                            <Link
+                                to="/cart"
+                                className="text-white font-medium"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                Cart
+                            </Link>
+                            {cart.length > 0 && (
+                                <span className="absolute -top-1 -right-4 w-2.5 h-2.5 bg-red-700 rounded-full border border-white"></span>
+                            )}
+                        </div>
 
                         {user && (
                             <Link
@@ -135,10 +148,7 @@ const Navbar = () => {
                                     ✅ {user.name}
                                 </span>
                                 <button
-                                    onClick={() => {
-                                        logout();
-                                        setIsOpen(false);
-                                    }}
+                                    onClick={() => setShowConfirm(true)} // ✅ trigger popup
                                     className="bg-white text-red-500 px-4 py-1 rounded hover:bg-black hover:text-white"
                                 >
                                     Logout
@@ -166,6 +176,34 @@ const Navbar = () => {
                 )}
             </nav>
 
+            {/* Confirmation Modal */}
+            {showConfirm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-6 rounded-2xl shadow-lg text-center space-y-4">
+                        <h2 className="text-lg font-semibold">Are you sure?</h2>
+                        <p className="text-gray-600">Do you really want to log out?</p>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                onClick={() => {
+                                    logout();
+                                    setIsOpen(false);
+                                    setShowConfirm(false);
+                                }}
+                                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
+                            >
+                                Yes, Logout
+                            </button>
+                            <button
+                                onClick={() => setShowConfirm(false)}
+                                className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Spacer so content doesn’t hide under navbar */}
             <div className="h-20"></div>
         </>
@@ -173,4 +211,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
